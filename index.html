@@ -1,0 +1,164 @@
+import React from "react"; import { motion } from "framer-motion"; import { Crown, Shield, Trophy, Gem, Globe2, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react"; import { Button } from "@/components/ui/button"; import { Card, CardContent } from "@/components/ui/card";
+
+// Single-file previewable landing page for the “Elite Card” brand // Theme: Violet + Black, luxury aesthetic // Tech: TailwindCSS, shadcn/ui, Framer Motion, Lucide icons
+
+const Section = ({ id, children, className = "" }) => (
+
+  <section id={id} className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
+    {children}
+  </section>
+);const Feature = ({ icon: Icon, title, children }) => ( <Card className="bg-black/40 backdrop-blur-xl border border-violet-700/30 hover:border-violet-400/40 transition rounded-2xl shadow-2xl"> <CardContent className="p-6 flex items-start gap-4"> <div className="p-3 rounded-2xl bg-gradient-to-br from-violet-600/40 to-fuchsia-600/40 border border-violet-500/30"> <Icon className="w-6 h-6" /> </div> <div> <h3 className="text-lg font-semibold tracking-wide">{title}</h3> <p className="text-sm/6 text-white/70 mt-1">{children}</p> </div> </CardContent> </Card> );
+
+const Tier = ({ name, price, perks, popular }) => ( <Card className={rounded-2xl shadow-2xl border ${popular ? "border-violet-400/70 bg-gradient-to-b from-violet-900/40 to-black" : "border-white/10 bg-black/40"}}> <CardContent className="p-6"> <div className="flex items-center justify-between"> <h4 className="text-xl font-semibold">{name}</h4> {popular && ( <span className="text-xs px-2 py-1 rounded-full bg-violet-600/30 border border-violet-400/40">Most Popular</span> )} </div> <div className="mt-3"> <span className="text-3xl font-bold">₹{price.toLocaleString()}</span> <span className="text-sm text-white/60"> / one-time</span> </div> <ul className="mt-4 space-y-2"> {perks.map((p, i) => ( <li key={i} className="flex items-start gap-2 text-sm text-white/80"> <CheckCircle2 className="mt-0.5 w-4 h-4" /> {p} </li> ))} </ul> <Button className="w-full mt-5 bg-violet-600 hover:bg-violet-500"> Get {name} </Button> </CardContent> </Card> );
+
+export default function EliteCardLanding() { return ( <div className="min-h-screen text-white bg-[radial-gradient(ellipse_at_top,rgba(88,28,135,0.35),transparent_40%),radial-gradient(ellipse_at_bottom,rgba(0,0,0,0.9),#000)]"> {/* Navbar */} <nav className="sticky top-0 z-40 backdrop-blur-xl bg-black/40 border-b border-white/10"> <Section className="flex items-center justify-between py-4"> <div className="flex items-center gap-2"> <div className="p-2 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600"> <Crown className="w-5 h-5" /> </div> <span className="font-semibold tracking-wide">Elite Card</span> </div> <div className="hidden md:flex items-center gap-2"> <a href="#features" className="text-sm px-3 py-2 rounded-lg hover:bg-white/5">Features</a> <a href="#tiers" className="text-sm px-3 py-2 rounded-lg hover:bg-white/5">Tiers</a> <a href="#rank" className="text-sm px-3 py-2 rounded-lg hover:bg-white/5">Global Rank</a> <a href="#faq" className="text-sm px-3 py-2 rounded-lg hover:bg-white/5">FAQ</a> </div> <div className="flex items-center gap-2"> <Button className="bg-violet-600 hover:bg-violet-500">Get Early Access</Button> </div> </Section> </nav>
+
+{/* Hero */}
+  <Section className="pt-16 pb-10">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="text-center"
+    >
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs uppercase tracking-wider">
+        <Sparkles className="w-3.5 h-3.5" /> Luxury • Prestige • Rank
+      </div>
+      <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
+        Elite Card
+      </h1>
+      <p className="mt-4 max-w-2xl mx-auto text-white/70">
+        A prestige platform for the world’s most discerning. Buy exquisite digital cards, showcase your net-worth tastefully, and claim your spot on the global leaderboard.
+      </p>
+      <div className="mt-8 flex items-center justify-center gap-3">
+        <Button className="px-6 py-6 text-base bg-violet-600 hover:bg-violet-500">
+          Join the Waitlist <ArrowRight className="ml-2 w-4 h-4" />
+        </Button>
+        <Button variant="outline" className="px-6 py-6 text-base border-white/20 hover:bg-white/5">
+          View Demo
+        </Button>
+      </div>
+    </motion.div>
+  </Section>
+
+  {/* Feature Grid */}
+  <Section id="features" className="py-10">
+    <div className="grid md:grid-cols-3 gap-6">
+      <Feature icon={Gem} title="Prestige Cards">
+        Curated collections with limited editions, metallic finishes, and on-chain provenance (optional).
+      </Feature>
+      <Feature icon={Globe2} title="Global Leaderboard">
+        Real-time ranking across the world. Country and city leaderboards to flex where it matters.
+      </Feature>
+      <Feature icon={Shield} title="Invite-Only Access">
+        Keep it exclusive. Gate access with codes, KYC tiers, and verified badges for top patrons.
+      </Feature>
+    </div>
+  </Section>
+
+  {/* Tiers / Pricing */}
+  <Section id="tiers" className="py-16">
+    <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Signature Tiers</h2>
+    <div className="grid md:grid-cols-3 gap-6">
+      <Tier
+        name="Black Diamond"
+        price={49999}
+        perks={["Priority access", "Exclusive drops", "Elite profile badge"]}
+      />
+      <Tier
+        name="Platinum Prestige"
+        price={79999}
+        perks={["Concierge invites", "Limited editions", "Higher rank multiplier"]}
+        popular
+      />
+      <Tier
+        name="Royal Sapphire"
+        price={99999}
+        perks={["Founders’ circle", "Early vault access", "Global spotlight"]}
+      />
+    </div>
+  </Section>
+
+  {/* Rank Preview */}
+  <Section id="rank" className="py-12">
+    <Card className="bg-gradient-to-br from-violet-900/40 to-black border border-violet-700/30 rounded-2xl shadow-2xl">
+      <CardContent className="p-6 md:p-10">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+          <div className="p-4 rounded-2xl bg-violet-700/20 border border-violet-500/30">
+            <Trophy className="w-10 h-10" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-2xl font-semibold">Global Rank Preview</h3>
+            <p className="text-white/70 mt-2 max-w-2xl">
+              Claim your place among the elite. Rankings are computed from your total spend and rare card holdings.
+            </p>
+            <div className="mt-6 grid w-full md:grid-cols-3 gap-3 text-sm">
+              {[
+                { rank: 1, name: "A. Kapoor", spent: 1250000 },
+                { rank: 2, name: "Z. Al Maktoum", spent: 990000 },
+                { rank: 3, name: "R. Tanaka", spent: 870000 },
+              ].map((u) => (
+                <div key={u.rank} className="flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 border border-white/10">
+                  <div className="flex items-center gap-3">
+                    <span className="text-lg font-bold">#{u.rank}</span>
+                    <span className="font-medium">{u.name}</span>
+                  </div>
+                  <span className="text-white/70">₹{u.spent.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  </Section>
+
+  {/* FAQ */}
+  <Section id="faq" className="py-16">
+    <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">FAQ</h2>
+    <div className="grid md:grid-cols-2 gap-6">
+      <Card className="bg-black/40 border-white/10 rounded-2xl">
+        <CardContent className="p-6">
+          <h4 className="font-semibold">Is Elite Card a payment app?</h4>
+          <p className="text-white/70 mt-2">No. Elite Card is a prestige platform. Users buy luxury digital cards to display status and compete on global rankings.</p>
+        </CardContent>
+      </Card>
+      <Card className="bg-black/40 border-white/10 rounded-2xl">
+        <CardContent className="p-6">
+          <h4 className="font-semibold">How are ranks calculated?</h4>
+          <p className="text-white/70 mt-2">Ranks are based on total verified spend and rarity multipliers. Future versions will include city/country boards and season resets.</p>
+        </CardContent>
+      </Card>
+      <Card className="bg-black/40 border-white/10 rounded-2xl">
+        <CardContent className="p-6">
+          <h4 className="font-semibold">Can I get early access?</h4>
+          <p className="text-white/70 mt-2">Yes. Join the waitlist today. Invites roll out in waves, prioritizing founders and premium tier holders.</p>
+        </CardContent>
+      </Card>
+      <Card className="bg-black/40 border-white/10 rounded-2xl">
+        <CardContent className="p-6">
+          <h4 className="font-semibold">Will there be an Android/iOS app?</h4>
+          <p className="text-white/70 mt-2">Absolutely. The Flutter app shares the same brand language and connects to the same backend for seamless experience.</p>
+        </CardContent>
+      </Card>
+    </div>
+  </Section>
+
+  {/* Footer */}
+  <footer className="mt-16 border-t border-white/10 bg-black/60">
+    <Section className="py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
+      <div className="flex items-center gap-2">
+        <Crown className="w-4 h-4" />
+        <span>Elite Card © {new Date().getFullYear()}</span>
+      </div>
+      <div className="flex items-center gap-4">
+        <a className="hover:text-white" href="#">Privacy</a>
+        <a className="hover:text-white" href="#">Terms</a>
+        <a className="hover:text-white" href="#">Contact</a>
+      </div>
+    </Section>
+  </footer>
+</div>
+
+); }
+
