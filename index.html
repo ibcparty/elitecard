@@ -1,164 +1,366 @@
-import React from "react"; import { motion } from "framer-motion"; import { Crown, Shield, Trophy, Gem, Globe2, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react"; import { Button } from "@/components/ui/button"; import { Card, CardContent } from "@/components/ui/card";
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Elite Card — Demo</title>
 
-// Single-file previewable landing page for the “Elite Card” brand // Theme: Violet + Black, luxury aesthetic // Tech: TailwindCSS, shadcn/ui, Framer Motion, Lucide icons
+  <!-- Google font (Inter) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-const Section = ({ id, children, className = "" }) => (
+  <style>
+    :root{
+      --bg:#08080a;
+      --panel:#0f1113;
+      --muted:#a8a8ad;
+      --card:#121215;
+      --card-border: rgba(255,255,255,0.03);
+      --accent: #6C4CFF; /* purple ring / button */
+      --accent-2: linear-gradient(90deg,#7b5bff,#5f3cff);
+      --white:#FFFFFF;
+      --glass: rgba(255,255,255,0.02);
+      --radius:18px;
+      --radius-sm:12px;
+    }
 
-  <section id={id} className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
-    {children}
-  </section>
-);const Feature = ({ icon: Icon, title, children }) => ( <Card className="bg-black/40 backdrop-blur-xl border border-violet-700/30 hover:border-violet-400/40 transition rounded-2xl shadow-2xl"> <CardContent className="p-6 flex items-start gap-4"> <div className="p-3 rounded-2xl bg-gradient-to-br from-violet-600/40 to-fuchsia-600/40 border border-violet-500/30"> <Icon className="w-6 h-6" /> </div> <div> <h3 className="text-lg font-semibold tracking-wide">{title}</h3> <p className="text-sm/6 text-white/70 mt-1">{children}</p> </div> </CardContent> </Card> );
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(800px 400px at 50% 10%, rgba(108,76,255,0.06), transparent),
+                  linear-gradient(180deg, rgba(255,255,255,0.01), transparent),
+                  var(--bg);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
 
-const Tier = ({ name, price, perks, popular }) => ( <Card className={rounded-2xl shadow-2xl border ${popular ? "border-violet-400/70 bg-gradient-to-b from-violet-900/40 to-black" : "border-white/10 bg-black/40"}}> <CardContent className="p-6"> <div className="flex items-center justify-between"> <h4 className="text-xl font-semibold">{name}</h4> {popular && ( <span className="text-xs px-2 py-1 rounded-full bg-violet-600/30 border border-violet-400/40">Most Popular</span> )} </div> <div className="mt-3"> <span className="text-3xl font-bold">₹{price.toLocaleString()}</span> <span className="text-sm text-white/60"> / one-time</span> </div> <ul className="mt-4 space-y-2"> {perks.map((p, i) => ( <li key={i} className="flex items-start gap-2 text-sm text-white/80"> <CheckCircle2 className="mt-0.5 w-4 h-4" /> {p} </li> ))} </ul> <Button className="w-full mt-5 bg-violet-600 hover:bg-violet-500"> Get {name} </Button> </CardContent> </Card> );
+    .wrap{
+      max-width:760px;
+      margin:64px auto;
+      padding:40px 28px;
+      display:flex;
+      flex-direction:column;
+      gap:36px;
+    }
 
-export default function EliteCardLanding() { return ( <div className="min-h-screen text-white bg-[radial-gradient(ellipse_at_top,rgba(88,28,135,0.35),transparent_40%),radial-gradient(ellipse_at_bottom,rgba(0,0,0,0.9),#000)]"> {/* Navbar */} <nav className="sticky top-0 z-40 backdrop-blur-xl bg-black/40 border-b border-white/10"> <Section className="flex items-center justify-between py-4"> <div className="flex items-center gap-2"> <div className="p-2 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600"> <Crown className="w-5 h-5" /> </div> <span className="font-semibold tracking-wide">Elite Card</span> </div> <div className="hidden md:flex items-center gap-2"> <a href="#features" className="text-sm px-3 py-2 rounded-lg hover:bg-white/5">Features</a> <a href="#tiers" className="text-sm px-3 py-2 rounded-lg hover:bg-white/5">Tiers</a> <a href="#rank" className="text-sm px-3 py-2 rounded-lg hover:bg-white/5">Global Rank</a> <a href="#faq" className="text-sm px-3 py-2 rounded-lg hover:bg-white/5">FAQ</a> </div> <div className="flex items-center gap-2"> <Button className="bg-violet-600 hover:bg-violet-500">Get Early Access</Button> </div> </Section> </nav>
+    .title{
+      text-align:center;
+      margin-bottom: -4px;
+    }
+    .title h1{
+      font-size:48px;
+      margin:0;
+      font-weight:800;
+      letter-spacing:-0.6px;
+    }
+    .title p{
+      margin:12px 0 0;
+      color:var(--muted);
+      font-size:18px;
+      font-weight:500;
+    }
 
-{/* Hero */}
-  <Section className="pt-16 pb-10">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="text-center"
-    >
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs uppercase tracking-wider">
-        <Sparkles className="w-3.5 h-3.5" /> Luxury • Prestige • Rank
-      </div>
-      <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
-        Elite Card
-      </h1>
-      <p className="mt-4 max-w-2xl mx-auto text-white/70">
-        A prestige platform for the world’s most discerning. Buy exquisite digital cards, showcase your net-worth tastefully, and claim your spot on the global leaderboard.
-      </p>
-      <div className="mt-8 flex items-center justify-center gap-3">
-        <Button className="px-6 py-6 text-base bg-violet-600 hover:bg-violet-500">
-          Join the Waitlist <ArrowRight className="ml-2 w-4 h-4" />
-        </Button>
-        <Button variant="outline" className="px-6 py-6 text-base border-white/20 hover:bg-white/5">
-          View Demo
-        </Button>
-      </div>
-    </motion.div>
-  </Section>
+    /* card */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.007));
+      border-radius:var(--radius);
+      padding:22px;
+      border:1px solid var(--card-border);
+      box-shadow: 0 6px 30px rgba(10,10,12,0.5);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+    }
 
-  {/* Feature Grid */}
-  <Section id="features" className="py-10">
-    <div className="grid md:grid-cols-3 gap-6">
-      <Feature icon={Gem} title="Prestige Cards">
-        Curated collections with limited editions, metallic finishes, and on-chain provenance (optional).
-      </Feature>
-      <Feature icon={Globe2} title="Global Leaderboard">
-        Real-time ranking across the world. Country and city leaderboards to flex where it matters.
-      </Feature>
-      <Feature icon={Shield} title="Invite-Only Access">
-        Keep it exclusive. Gate access with codes, KYC tiers, and verified badges for top patrons.
-      </Feature>
-    </div>
-  </Section>
+    .card-left{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-width:0;
+    }
 
-  {/* Tiers / Pricing */}
-  <Section id="tiers" className="py-16">
-    <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">Signature Tiers</h2>
-    <div className="grid md:grid-cols-3 gap-6">
-      <Tier
-        name="Black Diamond"
-        price={49999}
-        perks={["Priority access", "Exclusive drops", "Elite profile badge"]}
-      />
-      <Tier
-        name="Platinum Prestige"
-        price={79999}
-        perks={["Concierge invites", "Limited editions", "Higher rank multiplier"]}
-        popular
-      />
-      <Tier
-        name="Royal Sapphire"
-        price={99999}
-        perks={["Founders’ circle", "Early vault access", "Global spotlight"]}
-      />
-    </div>
-  </Section>
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:var(--muted);
+      font-weight:600;
+      font-size:15px;
+    }
+    .logo{
+      width:34px;
+      height:34px;
+      background: linear-gradient(135deg,#6c4cff,#8f73ff);
+      border-radius:8px;
+      display:inline-grid;
+      place-items:center;
+      font-weight:700;
+      color:white;
+      box-shadow: 0 4px 18px rgba(108,76,255,0.12), inset 0 -6px 14px rgba(255,255,255,0.03);
+    }
 
-  {/* Rank Preview */}
-  <Section id="rank" className="py-12">
-    <Card className="bg-gradient-to-br from-violet-900/40 to-black border border-violet-700/30 rounded-2xl shadow-2xl">
-      <CardContent className="p-6 md:p-10">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-          <div className="p-4 rounded-2xl bg-violet-700/20 border border-violet-500/30">
-            <Trophy className="w-10 h-10" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-2xl font-semibold">Global Rank Preview</h3>
-            <p className="text-white/70 mt-2 max-w-2xl">
-              Claim your place among the elite. Rankings are computed from your total spend and rare card holdings.
-            </p>
-            <div className="mt-6 grid w-full md:grid-cols-3 gap-3 text-sm">
-              {[
-                { rank: 1, name: "A. Kapoor", spent: 1250000 },
-                { rank: 2, name: "Z. Al Maktoum", spent: 990000 },
-                { rank: 3, name: "R. Tanaka", spent: 870000 },
-              ].map((u) => (
-                <div key={u.rank} className="flex items-center justify-between px-4 py-3 rounded-xl bg-black/40 border border-white/10">
-                  <div className="flex items-center gap-3">
-                    <span className="text-lg font-bold">#{u.rank}</span>
-                    <span className="font-medium">{u.name}</span>
-                  </div>
-                  <span className="text-white/70">₹{u.spent.toLocaleString()}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+    .name{
+      font-size:28px;
+      font-weight:700;
+      line-height:1;
+      color:var(--white);
+      margin-top:6px;
+      letter-spacing:-0.2px;
+    }
+    .amount{
+      font-size:28px;
+      font-weight:700;
+      margin-top:6px;
+      color:var(--white);
+      display:flex;
+      align-items:baseline;
+      gap:12px;
+    }
+    .amount .rupee{
+      font-size:20px;
+      color:var(--muted);
+      transform:translateY(1px);
+    }
+
+    /* rank circle */
+    .rank-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:14px;
+    }
+    .rank-circle{
+      width:106px;
+      height:106px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      font-size:44px;
+      font-weight:800;
+      color:var(--white);
+      position:relative;
+    }
+    /* ring */
+    .rank-circle::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:inherit;
+      padding:6px;
+      background: conic-gradient(from 90deg, rgba(108,76,255,0.9), rgba(108,76,255,0.6), rgba(108,76,255,0.2));
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 12px), black calc(100% - 11px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 12px), black calc(100% - 11px));
+      filter: blur(0.6px);
+      transform: rotate(-12deg);
+      z-index:0;
+    }
+    .rank-content{
+      position:relative;
+      z-index:1;
+      width:72px;
+      height:72px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: inset 0 -6px 12px rgba(0,0,0,0.6);
+    }
+
+    /* button */
+    .cta{
+      margin:18px auto 0;
+      display:block;
+      width:220px;
+      text-align:center;
+      border-radius:14px;
+      padding:14px 18px;
+      font-weight:700;
+      font-size:16px;
+      background:var(--accent);
+      border: none;
+      color:white;
+      cursor:pointer;
+      box-shadow: 0 10px 30px rgba(108,76,255,0.18);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .cta:active{ transform: translateY(1px) scale(.998); }
+    .cta:hover{ box-shadow: 0 18px 40px rgba(108,76,255,0.28); }
+
+    /* Global rank table */
+    .global{
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:20px;
+      border:1px solid var(--card-border);
+      box-shadow: 0 6px 30px rgba(10,10,12,0.45);
+    }
+    .global h3{
+      margin:4px 0 12px;
+      font-size:20px;
+      color:var(--white);
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.007));
+      padding:14px 16px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .row .left{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .rank-pill{
+      min-width:36px;
+      height:36px;
+      display:grid;
+      place-items:center;
+      border-radius:10px;
+      background: rgba(255,255,255,0.02);
+      font-weight:700;
+      color:var(--muted);
+    }
+    .user{
+      font-weight:600;
+      color:var(--white);
+    }
+    .score{
+      font-weight:700;
+      color:var(--muted);
+      min-width:90px;
+      text-align:right;
+    }
+
+    /* responsiveness */
+    @media (max-width:560px){
+      .wrap{ padding:28px 16px; margin:32px auto; }
+      .card{ flex-direction:column; align-items:flex-start; gap:18px; }
+      .rank-wrap{ width:100%; justify-content:flex-end; }
+      .rank-circle{ width:86px; height:86px; }
+      .rank-content{ width:58px; height:58px; font-size:30px; }
+      .name, .amount{ font-size:20px; }
+      .title h1{ font-size:34px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" role="main" aria-labelledby="heading">
+    <header class="title">
+      <h1 id="heading">Elite Card</h1>
+      <p>Get your virtual card and display your global rank</p>
+    </header>
+
+    <!-- top card -->
+    <section aria-label="elite card" class="card" id="eliteCard">
+      <div class="card-left">
+        <div class="badge">
+          <span class="logo" aria-hidden="true">E</span>
+          <span>Elite Card</span>
         </div>
-      </CardContent>
-    </Card>
-  </Section>
 
-  {/* FAQ */}
-  <Section id="faq" className="py-16">
-    <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">FAQ</h2>
-    <div className="grid md:grid-cols-2 gap-6">
-      <Card className="bg-black/40 border-white/10 rounded-2xl">
-        <CardContent className="p-6">
-          <h4 className="font-semibold">Is Elite Card a payment app?</h4>
-          <p className="text-white/70 mt-2">No. Elite Card is a prestige platform. Users buy luxury digital cards to display status and compete on global rankings.</p>
-        </CardContent>
-      </Card>
-      <Card className="bg-black/40 border-white/10 rounded-2xl">
-        <CardContent className="p-6">
-          <h4 className="font-semibold">How are ranks calculated?</h4>
-          <p className="text-white/70 mt-2">Ranks are based on total verified spend and rarity multipliers. Future versions will include city/country boards and season resets.</p>
-        </CardContent>
-      </Card>
-      <Card className="bg-black/40 border-white/10 rounded-2xl">
-        <CardContent className="p-6">
-          <h4 className="font-semibold">Can I get early access?</h4>
-          <p className="text-white/70 mt-2">Yes. Join the waitlist today. Invites roll out in waves, prioritizing founders and premium tier holders.</p>
-        </CardContent>
-      </Card>
-      <Card className="bg-black/40 border-white/10 rounded-2xl">
-        <CardContent className="p-6">
-          <h4 className="font-semibold">Will there be an Android/iOS app?</h4>
-          <p className="text-white/70 mt-2">Absolutely. The Flutter app shares the same brand language and connects to the same backend for seamless experience.</p>
-        </CardContent>
-      </Card>
-    </div>
-  </Section>
+        <div class="name" id="ownerName">Rahul D.</div>
 
-  {/* Footer */}
-  <footer className="mt-16 border-t border-white/10 bg-black/60">
-    <Section className="py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
-      <div className="flex items-center gap-2">
-        <Crown className="w-4 h-4" />
-        <span>Elite Card © {new Date().getFullYear()}</span>
+        <div class="amount" aria-hidden="false">
+          <span class="rupee">₹</span>
+          <span id="amountValue">79,999</span>
+        </div>
       </div>
-      <div className="flex items-center gap-4">
-        <a className="hover:text-white" href="#">Privacy</a>
-        <a className="hover:text-white" href="#">Terms</a>
-        <a className="hover:text-white" href="#">Contact</a>
+
+      <div class="rank-wrap" aria-hidden="false">
+        <div class="rank-circle" role="img" aria-label="global rank">
+          <div class="rank-content" id="rankValue">1</div>
+        </div>
       </div>
-    </Section>
-  </footer>
-</div>
+    </section>
 
-); }
+    <button class="cta" id="getCardBtn" aria-pressed="false">Get your card</button>
 
+    <!-- Global rank list -->
+    <section class="global" aria-labelledby="globalTitle">
+      <h3 id="globalTitle">Global Rank</h3>
+
+      <div class="list" id="rankList">
+        <div class="row">
+          <div class="left">
+            <div class="rank-pill">1</div>
+            <div class="user">Rahul D.</div>
+          </div>
+          <div class="score">79,999</div>
+        </div>
+
+        <div class="row">
+          <div class="left">
+            <div class="rank-pill">2</div>
+            <div class="user">Priya K.</div>
+          </div>
+          <div class="score">65,000</div>
+        </div>
+
+        <div class="row">
+          <div class="left">
+            <div class="rank-pill">3</div>
+            <div class="user">Ankit S.</div>
+          </div>
+          <div class="score">60,999</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // small JS to reproduce interaction: clicking "Get your card" pulses the top card and animates the ring
+    const btn = document.getElementById('getCardBtn');
+    const card = document.getElementById('eliteCard');
+    const rank = document.getElementById('rankValue');
+
+    function pulseCard() {
+      card.animate([
+        { transform: 'translateY(0) scale(1)', boxShadow: '0 6px 30px rgba(10,10,12,0.45)' },
+        { transform: 'translateY(-8px) scale(1.01)', boxShadow: '0 20px 60px rgba(108,76,255,0.14)' },
+        { transform: 'translateY(0) scale(1)', boxShadow: '0 6px 30px rgba(10,10,12,0.45)' }
+      ], { duration: 650, easing: 'cubic-bezier(.2,.9,.2,1)' });
+    }
+
+    function spinRing() {
+      const ring = document.querySelector('.rank-circle::before'); // pseudo-element can't be selected
+      // Instead animate the rank circle itself for a subtle rotate
+      document.querySelector('.rank-circle').animate([
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(360deg)' }
+      ], { duration: 900, easing: 'cubic-bezier(.22,.9,.3,1)' });
+    }
+
+    btn.addEventListener('click', () => {
+      btn.setAttribute('aria-pressed','true');
+      pulseCard();
+      spinRing();
+
+      // small demo: increment rank number then update list
+      const current = parseInt(rank.textContent,10) || 1;
+      const next = Math.max(1, current); // keep 1 for demo
+      // flash animation for rank
+      rank.animate([{ transform:'scale(1)'},{ transform:'scale(1.18)'},{ transform:'scale(1)'}], { duration:420, easing:'cubic-bezier(.2,.9,.2,1)' });
+      btn.setAttribute('aria-pressed','false');
+    });
+
+    // optional: keyboard accessible triggering via Enter on button
+    btn.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+  </script>
+</body>
+</html>
